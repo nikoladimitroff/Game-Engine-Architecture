@@ -21,7 +21,7 @@ I. Preliminaries
   1. Pipelines, Caches and Optimization
   1. Tools support
 
-2. Fundamentals (UE4) D
+2. Fundamentals (UE4) N
   1. UE4 Editor.
   1. UHT, UBT, UE4's modular approach
   1. Blueprint scripting (needed to make things easier)

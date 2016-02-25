@@ -24,6 +24,7 @@ I. Preliminaries
 2. Fundamentals (UE4) N
   1. UE4 Editor.
   1. UHT, UBT, UE4's modular approach
+  1. UE4 naming convention - U vs A vs S vs T vs F
   1. Blueprint scripting (needed to make things easier)
 
 3. 3D Math for Games (Theory) N
@@ -45,7 +46,6 @@ I. Preliminaries
   1. Breaking the world into levels.
 
 4. Architecturing games (UE4) SN
-  1. UE4 naming convention - U vs A vs S vs T vs F
   1. Basic UE4 classes - AGameMode & APlayerController. UObject, AActor.
   1. Ticking. Interaction between classes. Break down of the FPS Demo game.
   1. Exercises to make changes to the FPS game.

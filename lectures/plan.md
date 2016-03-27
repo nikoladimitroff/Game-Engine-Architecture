@@ -121,6 +121,7 @@ III. Advanced systems
     1. Collision queries & raycasting
   1. Rigid Body Dynamics - Velocities, Impulses, Integration methods, Constraints
   1. Integrating a Physics Engine into Your Game - Fixed time steps, Multithreading
+     http://gafferongames.com/game-physics/fix-your-timestep/
 
 9. Physics (UE4) N
   1. Collision detection. Collision responses.

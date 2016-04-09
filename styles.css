@@ -3,8 +3,11 @@ body {
     text-align: center;
     background: black;
     color: white;
-    font-family: Segoe UI;
+    font-family: Segoe UI, Colibri;
+    width: 600px;
+    margin: 0 auto;
 }
+
 a {
     color: white;
 }
@@ -12,15 +15,13 @@ a:hover {
     color: firebrick;
 }
 ol {
-    position: absolute;
-    left: 50vw;
-    top: 15vh;
-    transform: translate(-50%, 0%);
+    margin: 0 30%;
 }
 li {
     text-align: left;
     font-size: 1.5em;
     transition: color 0.25s linear;
+    cursor: pointer;
 }
 li:hover {
     color: firebrick;

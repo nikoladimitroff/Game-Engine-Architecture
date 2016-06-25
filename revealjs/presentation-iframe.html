@@ -5,6 +5,7 @@
 
         <link rel="stylesheet" href="css/reveal.css">
         <link rel="stylesheet" href="css/theme/black.css" id="theme">
+        <link rel="stylesheet" href="bga_theme.css" id="theme">
         <!-- Some additional style modifications and helper classes -->
         <style>
             /* Stretch the presentation */
@@ -67,7 +68,7 @@
                 }
 
                 var revealSection = document.querySelector(".reveal .slides section");
-                revealSection.dataset.markdown = localStorage.getItem("activePresentation");
+                revealSection.dataset.markdown = localStorage.getItem("activePresentation");    
                 // Full list of configuration options available at:
                 // https://github.com/hakimel/reveal.js#configuration
                 Reveal.initialize({

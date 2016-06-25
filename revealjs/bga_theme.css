@@ -1,0 +1,13 @@
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
+html, body {
+    background-image: url(https://gameawards.bg/wp-content/uploads/2016/05/bg5.png);
+}
+
+
+h1, h2 {
+    font-family: 'Press Start 2P', cursive !important;
+    font-size: 2em !important;
+}
+h2{
+    font-size: 1.5em !important;
+}

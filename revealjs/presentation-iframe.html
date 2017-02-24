@@ -58,17 +58,31 @@
         <script src="js/reveal.js"></script>
         <script>
             (function () {
-                var presentationURL = localStorage.getItem("coursePresentationFrameURL");
-                var currentURL = location.href;
-                if (currentURL.indexOf(presentationURL) < 0) {
+                var queryStringArgs = (function(a) {
+                     if (a == "") return {};
+                     var b = {};
+                     for (var i = 0; i < a.length; ++i)
+                     {
+                         var p=a[i].split('=', 2);
+                         if (p.length == 1)
+                             b[p[0]] = "";
+                         else
+                             b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                     }
+                     return b;
+                })(window.location.search.substr(1).split('&'));
+
+                var presentationURL = queryStringArgs["lecture"];
+                var hostAddress = "/Game-Engine-Architecture/";
+                if (!presentationURL) {
                     setTimeout(function () {
-                        window.location.href = presentationURL;
+                        window.location.href = hostAddress;
                     }, 0);
                     return;
                 }
 
                 var revealSection = document.querySelector(".reveal .slides section");
-                revealSection.dataset.markdown = localStorage.getItem("activePresentation");    
+                revealSection.dataset.markdown = hostAddress + "/lectures/" + queryStringArgs["lecture"];
                 // Full list of configuration options available at:
                 // https://github.com/hakimel/reveal.js#configuration
                 Reveal.initialize({

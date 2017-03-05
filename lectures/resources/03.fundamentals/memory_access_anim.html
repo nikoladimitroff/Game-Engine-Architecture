@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        font-family: "Calibri";
+        color: snow;
+    }
+    body h2 {
+        text-align: center;
+    }
+    .container{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        border-top: 2px solid black;
+        box-sizing: border-box;
+    }
+    .source, .destination {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        position: absolute;
+        top: 40%;
+    }
+    .source {
+        left: 30%;
+    }
+    .destination {
+        left: 95%;
+    }
+    @keyframes show-access-time {
+    from { left: 30%; }
+    to { left: 95%; }
+    }
+    .mover {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: green;
+        top: 40%;
+        left: 20%;
+        animation: show-access-time 1s infinite;
+    }
+</style>
+</head>
+<body>
+<h2>1ns here is represented as <span id="time-ratio"></span>s</h2>
+<script id="mem-access-template" type="application/html">
+    <div class="container">
+        <h1>
+            Type here
+        </h1>
+        <div class="source">
+
+        </div>
+        <div class="destination">
+
+        </div>
+        <div class="mover">
+
+        </div>
+    </div>
+</script>
+<script>
+var memAccess = [ // Times in ns, but will get converted to seconds
+    { action: "L1 cache hit", time: 0.5 },
+    { action: "L1 branch mispredict", time: 5 },
+    { action: "L2 cache hit", time: 7 },
+    { action: "Mutex lock/unlock", time: 25 },
+    { action: "RAM access", time: 100 },
+    { action: "Disk read 1MB", time: 20000 }
+];
+var nanosecondToSecondsRatio = 1;
+document.getElementById("time-ratio").textContent = nanosecondToSecondsRatio;
+
+var templateText = document.getElementById("mem-access-template");
+var parser = document.createElement("html");
+parser.innerHTML = templateText.textContent;
+var templateNode = parser.querySelector(".container");
+for (var i = 0; i < memAccess.length; i++) {
+    var memAccessElement = templateNode.cloneNode(true);
+    memAccessElement.style.top = ((i / memAccess.length) * 100) + "%";
+    memAccessElement.style.height = ((1 / memAccess.length) * 100) + "%";
+    memAccessElement.querySelector("h1").textContent = memAccess[i].action;
+    memAccessElement.querySelector(".mover").style.animationDuration = (memAccess[i].time * nanosecondToSecondsRatio) + "s";
+    document.body.appendChild(memAccessElement);
+}
+</script>
+</body>
+</html>

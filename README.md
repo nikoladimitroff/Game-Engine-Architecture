@@ -1,6 +1,8 @@
 A repo containing the learning materials for the course
 'Game Engine Architecture with UE4' taught at Univeristy of Sofia.
 
+The course is supported by [Ubisoft Sofia](https://ubisoft.com) and [Kipi Interactive](http://www.kipiinteractive.com/).
+
 See the lectures rendered at
 [nikoladimitroff.github.io/Game-Engine-Architecture](http://nikoladimitroff.github.io/Game-Engine-Architecture)
 
@@ -9,4 +11,3 @@ https://github.com/nikoladimitroff/Game-Engine-Architecture
 
 Note: The main branch for this repo is *gh-pages* as we use github pages
 to host the lectures.
-

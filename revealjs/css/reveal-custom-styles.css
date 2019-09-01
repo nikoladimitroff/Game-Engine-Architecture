@@ -1,0 +1,20 @@
+
+.authors-section {
+    position: relative;
+    left: -25%;
+}
+.companies-section {
+    position: relative;
+    top: -6.2em;
+    left: 25%;
+}
+.companies-section img {
+    border: none !important;
+    width: 25%;
+    box-shadow: none !important;
+    background: none !important;
+}
+
+.ubisoft-logo {
+    filter: invert(1);
+}

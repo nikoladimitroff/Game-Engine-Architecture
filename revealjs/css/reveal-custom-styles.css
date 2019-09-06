@@ -1,20 +1,33 @@
 
 .authors-section {
     position: relative;
-    left: -25%;
+    height: 5em;
+    width: 50%;
+    z-index: 1;
+}
+.authors-section td:nth-child(2) {
+    text-align: right;
 }
 .companies-section {
     position: relative;
-    top: -6.2em;
-    left: 25%;
+    top: -5em;
+    left: 50%;
+    height: 5em;
+    width: 50%;
 }
-.companies-section img {
-    border: none !important;
-    width: 25%;
-    box-shadow: none !important;
-    background: none !important;
+.companies-section a {
+    display: block;
+    width: 100%;
+    height: 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .ubisoft-logo {
+    background-image: url(../resources/common/ubisoft_logo.svg);
     filter: invert(1);
+}
+
+.kipi-logo {
+    background-image: url(../resources/common/kipi_logo.svg);
 }

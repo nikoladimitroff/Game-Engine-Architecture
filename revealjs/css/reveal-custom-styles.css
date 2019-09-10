@@ -31,3 +31,15 @@
 .kipi-logo {
     background-image: url(../resources/common/kipi_logo.svg);
 }
+
+.high-contrast-text {
+    text-shadow: 2px 0 0 rgb(34, 34, 34),
+    -2px 0 0 rgb(34, 34, 34),
+    0 2px 0 rgb(34, 34, 34),
+    0 -2px 0 rgb(34, 34, 34),
+    1px 1px rgb(34, 34, 34),
+    -1px -1px 0 rgb(34, 34, 34),
+    1px -1px 0 rgb(34, 34, 34),
+    -1px 1px 0 rgb(34, 34, 34)
+    !important;
+}

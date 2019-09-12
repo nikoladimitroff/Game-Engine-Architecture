@@ -43,3 +43,8 @@
     -1px 1px 0 rgb(34, 34, 34)
     !important;
 }
+
+/* Override some defaults */
+.reveal pre code {
+    max-height: 450px;
+}

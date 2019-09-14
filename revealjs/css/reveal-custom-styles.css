@@ -44,6 +44,11 @@
     !important;
 }
 
+.attribution {
+    font-size: 0.65em !important;
+    font-style: italic !important;
+}
+
 /* Override some defaults */
 .reveal pre code {
     max-height: 450px;

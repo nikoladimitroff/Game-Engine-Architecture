@@ -49,3 +49,7 @@ We welcome PRs. To run the slides locally:
 * do add sources
 * the main branch for this repo is *gh-pages* as we use github pages
 to host the lectures
+
+## Notes
+
+Don't update revealjs blindly - there are custom changes to the reveal.js/highlight.js plugin, marked with `// GEA`.

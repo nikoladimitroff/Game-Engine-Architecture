@@ -1,57 +1,30 @@
 /*!
  * reveal.js
- * http://lab.hakim.se/reveal-js
+ * http://revealjs.com
  * MIT licensed
  *
- * Copyright (C) 2015 Hakim El Hattab, http://hakim.se
+ * Copyright (C) 2019 Hakim El Hattab, http://hakim.se
  */
-
-
-/*********************************************
- * RESET STYLES
- *********************************************/
-
-html, body, .reveal div, .reveal span, .reveal applet, .reveal object, .reveal iframe,
-.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6, .reveal p, .reveal blockquote, .reveal pre,
-.reveal a, .reveal abbr, .reveal acronym, .reveal address, .reveal big, .reveal cite, .reveal code,
-.reveal del, .reveal dfn, .reveal em, .reveal img, .reveal ins, .reveal kbd, .reveal q, .reveal s, .reveal samp,
-.reveal small, .reveal strike, .reveal strong, .reveal sub, .reveal sup, .reveal tt, .reveal var,
-.reveal b, .reveal u, .reveal center,
-.reveal dl, .reveal dt, .reveal dd, .reveal ol, .reveal ul, .reveal li,
-.reveal fieldset, .reveal form, .reveal label, .reveal legend,
-.reveal table, .reveal caption, .reveal tbody, .reveal tfoot, .reveal thead, .reveal tr, .reveal th, .reveal td,
-.reveal article, .reveal aside, .reveal canvas, .reveal details, .reveal embed,
-.reveal figure, .reveal figcaption, .reveal footer, .reveal header, .reveal hgroup,
-.reveal menu, .reveal nav, .reveal output, .reveal ruby, .reveal section, .reveal summary,
-.reveal time, .reveal mark, .reveal audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-
-.reveal article, .reveal aside, .reveal details, .reveal figcaption, .reveal figure,
-.reveal footer, .reveal header, .reveal hgroup, .reveal menu, .reveal nav, .reveal section {
-	display: block;
-}
 
 
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
 
-html,
-body {
+html {
 	width: 100%;
 	height: 100%;
+	height: 100vh;
+	height: calc( var(--vh, 1vh) * 100 );
 	overflow: hidden;
 }
 
 body {
+	height: 100%;
+	overflow: hidden;
 	position: relative;
 	line-height: 1;
+	margin: 0;
 
 	background-color: #fff;
 	color: #000;
@@ -69,13 +42,13 @@ body {
 
 	&.visible {
 		opacity: 1;
-		visibility: visible;
+		visibility: inherit;
 	}
 }
 
 .reveal .slides section .fragment.grow {
 	opacity: 1;
-	visibility: visible;
+	visibility: inherit;
 
 	&.visible {
 		transform: scale( 1.3 );
@@ -84,7 +57,7 @@ body {
 
 .reveal .slides section .fragment.shrink {
 	opacity: 1;
-	visibility: visible;
+	visibility: inherit;
 
 	&.visible {
 		transform: scale( 0.7 );
@@ -101,7 +74,7 @@ body {
 
 .reveal .slides section .fragment.fade-out {
 	opacity: 1;
-	visibility: visible;
+	visibility: inherit;
 
 	&.visible {
 		opacity: 0;
@@ -111,29 +84,78 @@ body {
 
 .reveal .slides section .fragment.semi-fade-out {
 	opacity: 1;
-	visibility: visible;
+	visibility: inherit;
 
 	&.visible {
 		opacity: 0.5;
-		visibility: visible;
+		visibility: inherit;
 	}
 }
 
 .reveal .slides section .fragment.strike {
 	opacity: 1;
+	visibility: inherit;
 
 	&.visible {
 		text-decoration: line-through;
 	}
 }
 
+.reveal .slides section .fragment.fade-up {
+	transform: translate(0, 20%);
+
+	&.visible {
+		transform: translate(0, 0);
+	}
+}
+
+.reveal .slides section .fragment.fade-down {
+	transform: translate(0, -20%);
+
+	&.visible {
+		transform: translate(0, 0);
+	}
+}
+
+.reveal .slides section .fragment.fade-right {
+	transform: translate(-20%, 0);
+
+	&.visible {
+		transform: translate(0, 0);
+	}
+}
+
+.reveal .slides section .fragment.fade-left {
+	transform: translate(20%, 0);
+
+	&.visible {
+		transform: translate(0, 0);
+	}
+}
+
+.reveal .slides section .fragment.fade-in-then-out,
 .reveal .slides section .fragment.current-visible {
 	opacity: 0;
 	visibility: hidden;
 
 	&.current-fragment {
 		opacity: 1;
-		visibility: visible;
+		visibility: inherit;
+	}
+}
+
+.reveal .slides section .fragment.fade-in-then-semi-out {
+	opacity: 0;
+	visibility: hidden;
+
+	&.visible {
+		opacity: 0.5;
+		visibility: inherit;
+	}
+
+	&.current-fragment {
+		opacity: 1;
+		visibility: inherit;
 	}
 }
 
@@ -144,7 +166,7 @@ body {
 .reveal .slides section .fragment.highlight-blue,
 .reveal .slides section .fragment.highlight-current-blue {
 	opacity: 1;
-	visibility: visible;
+	visibility: inherit;
 }
 	.reveal .slides section .fragment.highlight-red.visible {
 		color: #ff2c2d
@@ -202,80 +224,278 @@ body {
  * CONTROLS
  *********************************************/
 
+@keyframes bounce-right {
+	0%, 10%, 25%, 40%, 50% {transform: translateX(0);}
+	20% {transform: translateX(10px);}
+	30% {transform: translateX(-5px);}
+}
+
+@keyframes bounce-down {
+	0%, 10%, 25%, 40%, 50% {transform: translateY(0);}
+	20% {transform: translateY(10px);}
+	30% {transform: translateY(-5px);}
+}
+
+$controlArrowSize: 3.6em;
+$controlArrowSpacing: 1.4em;
+$controlArrowLength: 2.6em;
+$controlArrowThickness: 0.5em;
+$controlsArrowAngle: 45deg;
+$controlsArrowAngleHover: 40deg;
+$controlsArrowAngleActive: 36deg;
+
+@mixin controlsArrowTransform( $angle ) {
+	&:before {
+		transform: translateX(($controlArrowSize - $controlArrowLength)/2) translateY(($controlArrowSize - $controlArrowThickness)/2) rotate( $angle );
+	}
+
+	&:after {
+		transform: translateX(($controlArrowSize - $controlArrowLength)/2) translateY(($controlArrowSize - $controlArrowThickness)/2) rotate( -$angle );
+	}
+}
+
 .reveal .controls {
+	$spacing: 12px;
+
 	display: none;
-	position: fixed;
-	width: 110px;
-	height: 110px;
-	z-index: 30;
-	right: 10px;
-	bottom: 10px;
-
-	-webkit-user-select: none;
-}
-
-.reveal .controls div {
 	position: absolute;
-	opacity: 0.05;
-	width: 0;
-	height: 0;
-	border: 12px solid transparent;
-	transform: scale(.9999);
-	transition: all 0.2s ease;
+	top: auto;
+	bottom: $spacing;
+	right: $spacing;
+	left: auto;
+	z-index: 1;
+	color: #000;
+	pointer-events: none;
+	font-size: 10px;
 
-	-webkit-tap-highlight-color: rgba( 0, 0, 0, 0 );
+	button {
+		position: absolute;
+		padding: 0;
+		background-color: transparent;
+		border: 0;
+		outline: 0;
+		cursor: pointer;
+		color: currentColor;
+		transform: scale(.9999);
+		transition: color 0.2s ease,
+					opacity 0.2s ease,
+					transform 0.2s ease;
+		z-index: 2; // above slides
+		pointer-events: auto;
+		font-size: inherit;
+
+		visibility: hidden;
+		opacity: 0;
+
+		-webkit-appearance: none;
+		-webkit-tap-highlight-color: rgba( 0, 0, 0, 0 );
+	}
+
+	.controls-arrow:before,
+	.controls-arrow:after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: $controlArrowLength;
+		height: $controlArrowThickness;
+		border-radius: $controlArrowThickness/2;
+		background-color: currentColor;
+
+		transition: all 0.15s ease, background-color 0.8s ease;
+		transform-origin: floor(($controlArrowThickness/2)*10)/10 50%;
+		will-change: transform;
+	}
+
+	.controls-arrow {
+		position: relative;
+		width: $controlArrowSize;
+		height: $controlArrowSize;
+
+		@include controlsArrowTransform( $controlsArrowAngle );
+
+		&:hover {
+			@include controlsArrowTransform( $controlsArrowAngleHover );
+		}
+
+		&:active {
+			@include controlsArrowTransform( $controlsArrowAngleActive );
+		}
+	}
+
+	.navigate-left {
+		right: $controlArrowSize + $controlArrowSpacing*2;
+		bottom: $controlArrowSpacing + $controlArrowSize/2;
+		transform: translateX( -10px );
+	}
+
+	.navigate-right {
+		right: 0;
+		bottom: $controlArrowSpacing + $controlArrowSize/2;
+		transform: translateX( 10px );
+
+		.controls-arrow {
+			transform: rotate( 180deg );
+		}
+
+		&.highlight {
+			animation: bounce-right 2s 50 both ease-out;
+		}
+	}
+
+	.navigate-up {
+		right: $controlArrowSpacing + $controlArrowSize/2;
+		bottom: $controlArrowSpacing*2 + $controlArrowSize;
+		transform: translateY( -10px );
+
+		.controls-arrow {
+			transform: rotate( 90deg );
+		}
+	}
+
+	.navigate-down {
+		right: $controlArrowSpacing + $controlArrowSize/2;
+		bottom: 0;
+		transform: translateY( 10px );
+
+		.controls-arrow {
+			transform: rotate( -90deg );
+		}
+
+		&.highlight {
+			animation: bounce-down 2s 50 both ease-out;
+		}
+	}
+
+	// Back arrow style: "faded":
+	// Deemphasize backwards navigation arrows in favor of drawing
+	// attention to forwards navigation
+	&[data-controls-back-arrows="faded"] .navigate-left.enabled,
+	&[data-controls-back-arrows="faded"] .navigate-up.enabled {
+		opacity: 0.3;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	// Back arrow style: "hidden":
+	// Never show arrows for backwards navigation
+	&[data-controls-back-arrows="hidden"] .navigate-left.enabled,
+	&[data-controls-back-arrows="hidden"] .navigate-up.enabled {
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	// Any control button that can be clicked is "enabled"
+	.enabled {
+		visibility: visible;
+		opacity: 0.9;
+		cursor: pointer;
+		transform: none;
+	}
+
+	// Any control button that leads to showing or hiding
+	// a fragment
+	.enabled.fragmented {
+		opacity: 0.5;
+	}
+
+	.enabled:hover,
+	.enabled.fragmented:hover {
+		opacity: 1;
+	}
 }
 
-.reveal .controls div.enabled {
-	opacity: 0.7;
-	cursor: pointer;
+.reveal[data-navigation-mode="linear"].has-horizontal-slides .navigate-up,
+.reveal[data-navigation-mode="linear"].has-horizontal-slides .navigate-down {
+	display: none;
 }
 
-.reveal .controls div.enabled:active {
-	margin-top: 1px;
+// Adjust the layout when there are no vertical slides
+.reveal[data-navigation-mode="linear"].has-horizontal-slides .navigate-left,
+.reveal:not(.has-vertical-slides) .controls .navigate-left {
+	bottom: $controlArrowSpacing;
+	right: 0.5em + $controlArrowSpacing + $controlArrowSize;
 }
 
-	.reveal .controls div.navigate-left {
-		top: 42px;
+.reveal[data-navigation-mode="linear"].has-horizontal-slides .navigate-right,
+.reveal:not(.has-vertical-slides) .controls .navigate-right {
+	bottom: $controlArrowSpacing;
+	right: 0.5em;
+}
 
-		border-right-width: 22px;
-		border-right-color: #000;
-	}
-		.reveal .controls div.navigate-left.fragmented {
-			opacity: 0.3;
+// Adjust the layout when there are no horizontal slides
+.reveal:not(.has-horizontal-slides) .controls .navigate-up {
+	right: $controlArrowSpacing;
+	bottom: $controlArrowSpacing + $controlArrowSize;
+}
+.reveal:not(.has-horizontal-slides) .controls .navigate-down {
+	right: $controlArrowSpacing;
+	bottom: 0.5em;
+}
+
+// Invert arrows based on background color
+.reveal.has-dark-background .controls {
+	color: #fff;
+}
+.reveal.has-light-background .controls {
+	color: #000;
+}
+
+// Disable active states on touch devices
+.reveal.no-hover .controls .controls-arrow:hover,
+.reveal.no-hover .controls .controls-arrow:active {
+	@include controlsArrowTransform( $controlsArrowAngle );
+}
+
+// Edge aligned controls layout
+@media screen and (min-width: 500px) {
+
+	$spacing: 8px;
+
+	.reveal .controls[data-controls-layout="edges"] {
+		& {
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
 		}
 
-	.reveal .controls div.navigate-right {
-		left: 74px;
-		top: 42px;
-
-		border-left-width: 22px;
-		border-left-color: #000;
-	}
-		.reveal .controls div.navigate-right.fragmented {
-			opacity: 0.3;
+		.navigate-left,
+		.navigate-right,
+		.navigate-up,
+		.navigate-down {
+			bottom: auto;
+			right: auto;
 		}
 
-	.reveal .controls div.navigate-up {
-		left: 42px;
-
-		border-bottom-width: 22px;
-		border-bottom-color: #000;
-	}
-		.reveal .controls div.navigate-up.fragmented {
-			opacity: 0.3;
+		.navigate-left {
+			top: 50%;
+			left: $spacing;
+			margin-top: -$controlArrowSize/2;
 		}
 
-	.reveal .controls div.navigate-down {
-		left: 42px;
-		top: 74px;
-
-		border-top-width: 22px;
-		border-top-color: #000;
-	}
-		.reveal .controls div.navigate-down.fragmented {
-			opacity: 0.3;
+		.navigate-right {
+			top: 50%;
+			right: $spacing;
+			margin-top: -$controlArrowSize/2;
 		}
+
+		.navigate-up {
+			top: $spacing;
+			left: 50%;
+			margin-left: -$controlArrowSize/2;
+		}
+
+		.navigate-down {
+			bottom: $spacing;
+			left: 50%;
+			margin-left: -$controlArrowSize/2;
+		}
+	}
+
+}
 
 
 /*********************************************
@@ -283,7 +503,7 @@ body {
  *********************************************/
 
 .reveal .progress {
-	position: fixed;
+	position: absolute;
 	display: none;
 	height: 3px;
 	width: 100%;
@@ -292,21 +512,22 @@ body {
 	z-index: 10;
 
 	background-color: rgba( 0, 0, 0, 0.2 );
+	color: #fff;
 }
 	.reveal .progress:after {
 		content: '';
 		display: block;
 		position: absolute;
-		height: 20px;
+		height: 10px;
 		width: 100%;
-		top: -20px;
+		top: -10px;
 	}
 	.reveal .progress span {
 		display: block;
 		height: 100%;
 		width: 0px;
 
-		background-color: #000;
+		background-color: currentColor;
 		transition: width 800ms cubic-bezier(0.260, 0.860, 0.440, 0.985);
 	}
 
@@ -315,13 +536,25 @@ body {
  *********************************************/
 
 .reveal .slide-number {
-	position: fixed;
+	position: absolute;
 	display: block;
-	right: 15px;
-	bottom: 15px;
-	opacity: 0.5;
+	right: 8px;
+	bottom: 8px;
 	z-index: 31;
+	font-family: Helvetica, sans-serif;
 	font-size: 12px;
+	line-height: 1;
+	color: #fff;
+	background-color: rgba( 0, 0, 0, 0.4 );
+	padding: 5px;
+}
+
+.reveal .slide-number a {
+	color: currentColor;
+}
+
+.reveal .slide-number-delimiter {
+	margin: 0 3px;
 }
 
 /*********************************************
@@ -333,7 +566,7 @@ body {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	touch-action: none;
+	touch-action: pinch-zoom;
 }
 
 .reveal .slides {
@@ -345,6 +578,7 @@ body {
 	bottom: 0;
 	left: 0;
 	margin: auto;
+	pointer-events: none;
 
 	overflow: visible;
 	z-index: 1;
@@ -354,7 +588,7 @@ body {
 }
 
 .reveal .slides>section {
-	-ms-perspective: 600px;
+	perspective: 600px;
 }
 
 .reveal .slides>section,
@@ -363,9 +597,10 @@ body {
 	position: absolute;
 	width: 100%;
 	padding: 20px 0px;
+	pointer-events: auto;
 
 	z-index: 10;
-	transform-style: preserve-3d;
+	transform-style: flat;
 	transition: transform-origin 800ms cubic-bezier(0.260, 0.860, 0.440, 0.985),
 				transform 800ms cubic-bezier(0.260, 0.860, 0.440, 0.985),
 				visibility 800ms cubic-bezier(0.260, 0.860, 0.440, 0.985),
@@ -391,6 +626,8 @@ body {
 .reveal .slides>section.stack {
 	padding-top: 0;
 	padding-bottom: 0;
+	pointer-events: none;
+	height: 100%;
 }
 
 .reveal .slides>section.present,
@@ -398,6 +635,13 @@ body {
 	display: block;
 	z-index: 11;
 	opacity: 1;
+}
+
+.reveal .slides>section:empty,
+.reveal .slides>section>section:empty,
+.reveal .slides>section[data-background-interactive],
+.reveal .slides>section>section[data-background-interactive] {
+	pointer-events: none;
 }
 
 .reveal.center,
@@ -432,8 +676,14 @@ body {
  *********************************************/
 
 @mixin transition-global($style) {
-	.reveal .slides>section[data-transition=#{$style}],
-	.reveal.#{$style} .slides>section:not([data-transition]) {
+	.reveal .slides section[data-transition=#{$style}],
+	.reveal.#{$style} .slides section:not([data-transition]) {
+		@content;
+	}
+}
+@mixin transition-stack($style) {
+	.reveal .slides section[data-transition=#{$style}].stack,
+	.reveal.#{$style} .slides section.stack {
 		@content;
 	}
 }
@@ -496,6 +746,10 @@ body {
  *********************************************/
 
 @each $stylename in default, convex {
+	@include transition-stack(#{$stylename}) {
+		transform-style: preserve-3d;
+	}
+
 	@include transition-horizontal-past(#{$stylename}) {
 		transform: translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0);
 	}
@@ -513,6 +767,10 @@ body {
 /*********************************************
  * CONCAVE TRANSITION
  *********************************************/
+
+@include transition-stack(concave) {
+	transform-style: preserve-3d;
+}
 
 @include transition-horizontal-past(concave) {
 	transform: translate3d(-100%, 0, 0) rotateY(90deg) translate3d(-100%, 0, 0);
@@ -544,15 +802,19 @@ body {
 	transform: scale(0.2);
 }
 @include transition-vertical-past(zoom) {
-	transform: translate(0, -150%);
+	transform: scale(16);
 }
 @include transition-vertical-future(zoom) {
-	transform: translate(0, 150%);
+	transform: scale(0.2);
 }
 
 
 /*********************************************
  * CUBE TRANSITION
+ *
+ * WARNING:
+ * this is deprecated and will be removed in a
+ * future version.
  *********************************************/
 
 .reveal.cube .slides {
@@ -564,6 +826,7 @@ body {
 	min-height: 700px;
 	backface-visibility: hidden;
 	box-sizing: border-box;
+	transform-style: preserve-3d;
 }
 	.reveal.center.cube .slides section {
 		min-height: 0;
@@ -624,6 +887,10 @@ body {
 
 /*********************************************
  * PAGE TRANSITION
+ *
+ * WARNING:
+ * this is deprecated and will be removed in a
+ * future version.
  *********************************************/
 
 .reveal.page .slides {
@@ -635,6 +902,7 @@ body {
 	padding: 30px;
 	min-height: 700px;
 	box-sizing: border-box;
+	transform-style: preserve-3d;
 }
 	.reveal.page .slides section.past {
 		z-index: 12;
@@ -737,6 +1005,25 @@ body {
 	z-index: 100;
 	transition: all 1s ease;
 }
+
+.reveal .pause-overlay .resume-button {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	color: #ccc;
+	border-radius: 2px;
+	padding: 6px 14px;
+	border: 2px solid #ccc;
+	font-size: 16px;
+	background: transparent;
+	cursor: pointer;
+
+	&:hover {
+		color: #fff;
+		border-color: #fff;
+	}
+}
+
 .reveal.paused .pause-overlay {
 	visibility: visible;
 	opacity: 1;
@@ -751,35 +1038,36 @@ body {
 	overflow-y: auto;
 }
 
+.no-transforms .reveal {
+	overflow: visible;
+}
+
 .no-transforms .reveal .slides {
 	position: relative;
 	width: 80%;
-	height: auto !important;
+	max-width: 1280px;
+	height: auto;
 	top: 0;
-	left: 50%;
-	margin: 0;
+	margin: 0 auto;
 	text-align: center;
 }
 
 .no-transforms .reveal .controls,
 .no-transforms .reveal .progress {
-	display: none !important;
+	display: none;
 }
 
 .no-transforms .reveal .slides section {
-	display: block !important;
-	opacity: 1 !important;
-	position: relative !important;
+	display: block;
+	opacity: 1;
+	position: relative;
 	height: auto;
 	min-height: 0;
 	top: 0;
-	left: -50%;
+	left: 0;
+	margin: 10vh 0;
 	margin: 70px 0;
 	transform: none;
-}
-
-.no-transforms .reveal .slides section section {
-	left: 0;
 }
 
 .reveal .no-transition,
@@ -807,13 +1095,21 @@ body {
 		height: 100%;
 		opacity: 0;
 		visibility: hidden;
+		overflow: hidden;
 
 		background-color: rgba( 0, 0, 0, 0 );
+
+		transition: all 800ms cubic-bezier(0.260, 0.860, 0.440, 0.985);
+	}
+
+	.reveal .slide-background-content {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+
 		background-position: 50% 50%;
 		background-repeat: no-repeat;
 		background-size: cover;
-
-		transition: all 800ms cubic-bezier(0.260, 0.860, 0.440, 0.985);
 	}
 
 	.reveal .slide-background.stack {
@@ -823,6 +1119,7 @@ body {
 	.reveal .slide-background.present {
 		opacity: 1;
 		visibility: visible;
+		z-index: 2;
 	}
 
 	.print-pdf .reveal .slide-background {
@@ -839,7 +1136,11 @@ body {
 	max-height: none;
 	top: 0;
 	left: 0;
+	object-fit: cover;
 }
+	.reveal .slide-background[data-background-size="contain"] video {
+		object-fit: contain;
+	}
 
 /* Immediate transition style */
 .reveal[data-background-transition=none]>.backgrounds .slide-background,
@@ -969,8 +1270,15 @@ body {
 	perspective-origin: 50% 50%;
 	perspective: 700px;
 
+	.slides {
+		// Fixes overview rendering errors in FF48+, not applied to
+		// other browsers since it degrades performance
+		-moz-transform-style: preserve-3d;
+	}
+
 	.slides section {
-		height: 700px;
+		height: 100%;
+		top: 0 !important;
 		opacity: 1 !important;
 		overflow: hidden;
 		visibility: visible !important;
@@ -1000,6 +1308,10 @@ body {
 
 	.backgrounds {
 		perspective: inherit;
+
+		// Fixes overview rendering errors in FF48+, not applied to
+		// other browsers since it degrades performance
+		-moz-transform-style: preserve-3d;
 	}
 
 	.backgrounds .slide-background {
@@ -1009,6 +1321,10 @@ body {
 		// This can't be applied to the slide itself in Safari
 		outline: 10px solid rgba(150,150,150,0.1);
 		outline-offset: 10px;
+	}
+
+	.backgrounds .slide-background.stack {
+		overflow: visible;
 	}
 }
 
@@ -1022,10 +1338,6 @@ body {
 .reveal.overview .backgrounds .slide-background,
 .reveal.overview-deactivating .backgrounds .slide-background {
 	transition: none;
-}
-
-.reveal.overview-animated .slides {
-	transition: transform 0.4s ease;
 }
 
 
@@ -1076,10 +1388,10 @@ body {
 
 
 /*********************************************
- * LINK PREVIEW OVERLAY
+ * OVERLAY FOR LINK PREVIEWS AND HELP
  *********************************************/
 
-.reveal .overlay {
+.reveal > .overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -1091,12 +1403,12 @@ body {
 	visibility: hidden;
 	transition: all 0.3s ease;
 }
-	.reveal .overlay.visible {
+	.reveal > .overlay.visible {
 		opacity: 1;
 		visibility: visible;
 	}
 
-	.reveal .overlay .spinner {
+	.reveal > .overlay .spinner {
 		position: absolute;
 		display: block;
 		top: 50%;
@@ -1112,7 +1424,7 @@ body {
 		transition: all 0.3s ease;
 	}
 
-	.reveal .overlay header {
+	.reveal > .overlay header {
 		position: absolute;
 		left: 0;
 		top: 0;
@@ -1121,20 +1433,21 @@ body {
 		z-index: 2;
 		border-bottom: 1px solid #222;
 	}
-		.reveal .overlay header a {
+		.reveal > .overlay header a {
 			display: inline-block;
 			width: 40px;
 			height: 40px;
+			line-height: 36px;
 			padding: 0 10px;
 			float: right;
 			opacity: 0.6;
 
 			box-sizing: border-box;
 		}
-			.reveal .overlay header a:hover {
+			.reveal > .overlay header a:hover {
 				opacity: 1;
 			}
-			.reveal .overlay header a .icon {
+			.reveal > .overlay header a .icon {
 				display: inline-block;
 				width: 20px;
 				height: 20px;
@@ -1143,22 +1456,23 @@ body {
 				background-size: 100%;
 				background-repeat: no-repeat;
 			}
-			.reveal .overlay header a.close .icon {
+			.reveal > .overlay header a.close .icon {
 				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABkklEQVRYR8WX4VHDMAxG6wnoJrABZQPYBCaBTWAD2g1gE5gg6OOsXuxIlr40d81dfrSJ9V4c2VLK7spHuTJ/5wpM07QXuXc5X0opX2tEJcadjHuV80li/FgxTIEK/5QBCICBD6xEhSMGHgQPgBgLiYVAB1dpSqKDawxTohFw4JSEA3clzgIBPCURwE2JucBR7rhPJJv5OpJwDX+SfDjgx1wACQeJG1aChP9K/IMmdZ8DtESV1WyP3Bt4MwM6sj4NMxMYiqUWHQu4KYA/SYkIjOsm3BXYWMKFDwU2khjCQ4ELJUJ4SmClRArOCmSXGuKma0fYD5CbzHxFpCSGAhfAVSSUGDUk2BWZaff2g6GE15BsBQ9nwmpIGDiyHQddwNTMKkbZaf9fajXQca1EX44puJZUsnY0ObGmITE3GVLCbEhQUjGVt146j6oasWN+49Vph2w1pZ5EansNZqKBm1txbU57iRRcZ86RWMDdWtBJUHBHwoQPi1GV+JCbntmvok7iTX4/Up9mgyTc/FJYDTcndgH/AA5A/CHsyEkVAAAAAElFTkSuQmCC);
 			}
-			.reveal .overlay header a.external .icon {
+			.reveal > .overlay header a.external .icon {
 				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcElEQVRYR+2WSQoAIQwEzf8f7XiOMkUQxUPlGkM3hVmiQfQR9GYnH1SsAQlI4DiBqkCMoNb9y2e90IAEJPAcgdznU9+engMaeJ7Azh5Y1U67gAho4DqBqmB1buAf0MB1AlVBek83ZPkmJMGc1wAR+AAqod/B97TRpQAAAABJRU5ErkJggg==);
 			}
 
-	.reveal .overlay .viewport {
+	.reveal > .overlay .viewport {
 		position: absolute;
+		display: flex;
 		top: 40px;
 		right: 0;
 		bottom: 0;
 		left: 0;
 	}
 
-	.reveal .overlay.overlay-preview .viewport iframe {
+	.reveal > .overlay.overlay-preview .viewport iframe {
 		width: 100%;
 		height: 100%;
 		max-width: 100%;
@@ -1170,53 +1484,69 @@ body {
 		transition: all 0.3s ease;
 	}
 
-	.reveal .overlay.overlay-preview.loaded .viewport iframe {
+	.reveal > .overlay.overlay-preview.loaded .viewport iframe {
 		opacity: 1;
 		visibility: visible;
 	}
 
-	.reveal .overlay.overlay-preview.loaded .spinner {
+	.reveal > .overlay.overlay-preview.loaded .viewport-inner  {
+		position: absolute;
+		z-index: -1;
+		left: 0;
+		top: 45%;
+		width: 100%;
+		text-align: center;
+		letter-spacing: normal;
+	}
+	.reveal > .overlay.overlay-preview .x-frame-error  {
+		opacity: 0;
+		transition: opacity 0.3s ease 0.3s;
+	}
+	.reveal > .overlay.overlay-preview.loaded .x-frame-error  {
+		opacity: 1;
+	}
+
+	.reveal > .overlay.overlay-preview.loaded .spinner {
 		opacity: 0;
 		visibility: hidden;
 		transform: scale(0.2);
 	}
 
-	.reveal .overlay.overlay-help .viewport {
+	.reveal > .overlay.overlay-help .viewport {
 		overflow: auto;
 		color: #fff;
 	}
 
-	.reveal .overlay.overlay-help .viewport .viewport-inner {
+	.reveal > .overlay.overlay-help .viewport .viewport-inner {
 		width: 600px;
-		margin: 0 auto;
-		padding: 60px;
+		margin: auto;
+		padding: 20px 20px 80px 20px;
 		text-align: center;
 		letter-spacing: normal;
 	}
 
-	.reveal .overlay.overlay-help .viewport .viewport-inner .title {
+	.reveal > .overlay.overlay-help .viewport .viewport-inner .title {
 		font-size: 20px;
 	}
 
-	.reveal .overlay.overlay-help .viewport .viewport-inner table {
+	.reveal > .overlay.overlay-help .viewport .viewport-inner table {
 		border: 1px solid #fff;
 		border-collapse: collapse;
-		font-size: 14px;
+		font-size: 16px;
 	}
 
-	.reveal .overlay.overlay-help .viewport .viewport-inner table th,
-	.reveal .overlay.overlay-help .viewport .viewport-inner table td {
+	.reveal > .overlay.overlay-help .viewport .viewport-inner table th,
+	.reveal > .overlay.overlay-help .viewport .viewport-inner table td {
 		width: 200px;
-		padding: 10px;
+		padding: 14px;
 		border: 1px solid #fff;
 		vertical-align: middle;
 	}
 
-	.reveal .overlay.overlay-help .viewport .viewport-inner table th {
+	.reveal > .overlay.overlay-help .viewport .viewport-inner table th {
 		padding-top: 20px;
 		padding-bottom: 20px;
 	}
-
 
 
 /*********************************************
@@ -1224,17 +1554,44 @@ body {
  *********************************************/
 
 .reveal .playback {
-	position: fixed;
+	position: absolute;
 	left: 15px;
-	bottom: 15px;
+	bottom: 20px;
 	z-index: 30;
 	cursor: pointer;
 	transition: all 400ms ease;
+	-webkit-tap-highlight-color: rgba( 0, 0, 0, 0 );
 }
 
 .reveal.overview .playback {
 	opacity: 0;
 	visibility: hidden;
+}
+
+
+/*********************************************
+ * CODE HIGHLGIHTING
+ *********************************************/
+
+.reveal .hljs table {
+	margin: initial;
+}
+
+.reveal .hljs-ln-code,
+.reveal .hljs-ln-numbers {
+	padding: 0;
+	border: 0;
+}
+
+.reveal .hljs-ln-numbers {
+	opacity: 0.6;
+	padding-right: 0.75em;
+	text-align: right;
+	vertical-align: top;
+}
+
+.reveal .hljs[data-line-numbers]:not([data-line-numbers=""]) tr:not(.highlight-line) {
+	opacity: 0.4;
 }
 
 
@@ -1288,8 +1645,102 @@ body {
  * SPEAKER NOTES
  *********************************************/
 
+$notesWidthPercent: 25%;
+
+// Hide on-page notes
 .reveal aside.notes {
 	display: none;
+}
+
+// An interface element that can optionally be used to show the
+// speaker notes to all viewers, on top of the presentation
+.reveal .speaker-notes {
+	display: none;
+	position: absolute;
+	width: $notesWidthPercent / (1-$notesWidthPercent/100) * 1%;
+	height: 100%;
+	top: 0;
+	left: 100%;
+	padding: 14px 18px 14px 18px;
+	z-index: 1;
+	font-size: 18px;
+	line-height: 1.4;
+	border: 1px solid rgba( 0, 0, 0, 0.05 );
+	color: #222;
+	background-color: #f5f5f5;
+	overflow: auto;
+	box-sizing: border-box;
+	text-align: left;
+	font-family: Helvetica, sans-serif;
+	-webkit-overflow-scrolling: touch;
+
+	.notes-placeholder {
+		color: #ccc;
+		font-style: italic;
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	&:before {
+		content: 'Speaker notes';
+		display: block;
+		margin-bottom: 10px;
+		opacity: 0.5;
+	}
+}
+
+
+.reveal.show-notes {
+	max-width: 100% - $notesWidthPercent;
+	overflow: visible;
+}
+
+.reveal.show-notes .speaker-notes {
+	display: block;
+}
+
+@media screen and (min-width: 1600px) {
+	.reveal .speaker-notes {
+		font-size: 20px;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.reveal.show-notes {
+		border-left: 0;
+		max-width: none;
+		max-height: 70%;
+		max-height: 70vh;
+		overflow: visible;
+	}
+
+	.reveal.show-notes .speaker-notes {
+		top: 100%;
+		left: 0;
+		width: 100%;
+		height: (30/0.7)*1%;
+		height: 30vh;
+		border: 0;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.reveal.show-notes {
+		max-height: 60%;
+		max-height: 60vh;
+	}
+
+	.reveal.show-notes .speaker-notes {
+		top: 100%;
+		height: (40/0.6)*1%;
+		height: 40vh;
+	}
+
+	.reveal .speaker-notes {
+		font-size: 14px;
+	}
 }
 
 
@@ -1315,5 +1766,3 @@ body {
 .zoomed .reveal .roll span:after {
 	visibility: hidden;
 }
-
-

@@ -14,8 +14,12 @@
                 height: 100%;
            }
 
-           .reveal table {
-                font-size: 0.7em;
+           .reveal table { /* Markdown tables are a tad too big */
+                font-size: 0.75em;
+           }
+           /* But tables are also used for line numbers in code so don't touch these */
+           .reveal code table {
+               font-size: inherit;
            }
 
            .left-aligned {

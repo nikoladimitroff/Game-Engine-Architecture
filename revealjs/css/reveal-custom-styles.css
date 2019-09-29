@@ -1,4 +1,21 @@
+/* Presentation iframe */
+#home-button {
+    position: fixed;
+    font-size: 2.25em;
+    z-index: 30;
+    right: 120px;
+    bottom: 48px;
+}
 
+#home-button a {
+    color: #42affa;
+    text-decoration: unset;
+}
+#home-button a:hover {
+    color: #8dcffc;
+}
+
+/* First slide */
 .authors-section {
     position: relative;
     height: 5em;
@@ -32,6 +49,7 @@
     background-image: url(../resources/common/kipi_logo.svg);
 }
 
+/* General styles */
 .high-contrast-text {
     text-shadow: 2px 0 0 rgb(34, 34, 34),
     -2px 0 0 rgb(34, 34, 34),

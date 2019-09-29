@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="css/reveal.css">
         <link rel="stylesheet" href="css/theme/black.css" id="theme">
         <link rel="stylesheet" href="css/reveal-custom-styles.css">
+        <link rel="shortcut icon" href="../favicon.ico" type="image/vnd.microsoft.icon" />
+        <title>Game Engine Architecture Slides</title>
         <!-- Some additional style modifications and helper classes -->
         <style>
             /* Stretch the presentation */
@@ -61,11 +63,12 @@
                 </div>
             </div>
         </div>
-        <div id="home-button">
+        <div id="meta-section">
             <a href="/Game-Engine-Architecture"><i class="fa fa-home"></i></a>
             <a href="#"><i class="fa fa-reply-all"></i></a>
+            <br/>
+            <span id="lecture-name"></span>
         </div>
-        <script src="lib/js/head.min.js"></script>
         <script src="js/reveal.js"></script>
         <script>
             (function () {
@@ -91,6 +94,16 @@
                     }, 0);
                     return;
                 }
+                var convertToPrintableName = function (lecture) {
+                    var alwaysCapitalizedWords = ["ui", "ai", "ue4"];
+                    return lecture.split(".")[1].split("_").map(function (word) {
+                        if (alwaysCapitalizedWords.indexOf(word) != -1) {
+                            return word.toUpperCase();
+                        }
+                        return word.substr(0, 1).toUpperCase() + word.substr(1);
+                    }).join(" ");
+                };
+                document.getElementById("lecture-name").textContent = convertToPrintableName(queryStringArgs["lecture"]);
 
                 var revealSection = document.querySelector(".reveal .slides section");
                 revealSection.dataset.markdown = hostAddress + "/lectures/" + queryStringArgs["lecture"];

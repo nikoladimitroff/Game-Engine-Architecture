@@ -1,18 +1,26 @@
 /* Presentation iframe */
-#home-button {
+#meta-section {
     position: fixed;
     font-size: 2.25em;
     z-index: 30;
     right: 120px;
     bottom: 48px;
+    text-align: right;
 }
 
-#home-button a {
+#meta-section a {
     color: #42affa;
     text-decoration: unset;
 }
-#home-button a:hover {
+#meta-section a:hover {
     color: #8dcffc;
+}
+
+#lecture-name {
+    text-align: right;
+    font-size: 28px;
+    color: #b6b6b6;
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
 }
 
 /* First slide */
@@ -70,4 +78,9 @@
 /* Override some defaults */
 .reveal pre code {
     max-height: 450px;
+}
+
+.constrain-image {
+    max-width: 35% !important;
+    max-height: 35% !important;
 }

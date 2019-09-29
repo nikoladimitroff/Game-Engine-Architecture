@@ -108,14 +108,13 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{b:/\{/,e:/\}/,i:/:/}]}});
 
 			hljs.highlightBlock( block );
 
-			// GEA: Display line numbers everywhere but on singe lines
-			//if( block.hasAttribute( 'data-line-numbers' ) || true) {
+			if( block.hasAttribute( 'data-line-numbers' ) ) {
 				hljs.lineNumbersBlock( block, { singleLine: false } );
 
 				// hljs.lineNumbersBlock runs async code on the next cycle,
 				// so we need to do the same to execute after it's done
 				setTimeout( RevealHighlight.highlightLines.bind( this, block ), 0 );
-			//}
+			}
 
 		},
 

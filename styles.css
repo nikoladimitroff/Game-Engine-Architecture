@@ -10,21 +10,39 @@ body {
 
 a {
     color: white;
+    text-decoration: unset;
 }
 a:hover {
     color: firebrick;
 }
-ol {
-    margin: 0 30%;
+table {
+    margin: 0 10%;
+    width: 80%;
 }
-li {
+td, th {
     text-align: left;
-    font-size: 1.5em;
+    font-size: 1.35em;
+}
+tbody td {
+    border-top: 1px solid white;
+    padding-left: 1em;
+}
+tbody tr:nth-child(even) {
+    background-color: rgba(219, 219, 219, 0.35);
+}
+td > a {
     transition: color 0.25s linear;
     cursor: pointer;
 }
-li:hover {
+td > a:hover {
     color: firebrick;
+}
+td > span {
+    font-style: italic;
+}
+
+.social-icons {
+    font-size: 3em;
 }
 
 /* ------ MARCHIN ANTS BELOW ------------*/

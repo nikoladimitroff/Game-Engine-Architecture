@@ -1,54 +1,86 @@
 <html>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<!-- Main styles -->
 <link rel="stylesheet" href="styles.css">
 <body>
 <h1>Game Engine Architecture Lectures</h1>
-<h2>
-    <a target="_blank" href="https://github.com/nikoladimitroff/Game-Engine-Architecture">Github Repo</a>
-    <a target="_blank" href="https://www.youtube.com/channel/UCcwqBGM1UhEp54stl_zYPfA">Youtube channel</a>
+<h2 class="social-icons">
+    <a target="_blank" href="https://github.com/nikoladimitroff/Game-Engine-Architecture"><i class="fa fa-github"></i></a>
+    <a target="_blank" href="https://www.youtube.com/channel/UCcwqBGM1UhEp54stl_zYPfA"><i class="fa fa-youtube-play"></i></a>
     </br>
 </h2>
-<ol id="lectures" class="list-crossed">
-</ol>
+<table id="lectures" class="list-crossed">
+    <thead>
+        <tr>
+            <th>General</th>
+            <th>Unreal Engine 4</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
 <script>
 var lectures = [
-    "01.intro.md",
-    "02.intro_ue4.md",
-    "03.fundamentals.md",
-    "04.fundamentals_ue4.md",
-    "05.math.md",
-    "06.architecture.md",
-    "06.architecture_ue4.md",
-    "07.lowlevel.md",
-    "08.lowlevel_ue4.md",
-    "09.rendering_1.md",
-    "09.rendering_2.md",
-    "10.rendering_ue4.md",
-    "11.animation.md",
-    "12.animation_ue4.md",
-    "13.ui.md",
-    "14.ui_ue4.md",
-    "15.ai.md",
-    "16.ai_ue4.md",
-    "17.physics.md",
-    "18.physics_ue4.md",
-    "19.networking.md",
-    "20.networking_ue4.md",
-    "21.tools.md",
-    "22.tools_ue4.md",
+    ["01.intro.md", "02.intro_ue4.md"],
+    ["03.fundamentals.md", "04.fundamentals_ue4.md"],
+    ["05.architecture.md", "06.architecture_ue4.md"],
+    ["07.lowlevel.md", "08.lowlevel_ue4.md"],
+    ["09.math.md", "Midterm 1 / UE4 practice"],
+    ["10.rendering_1.md", "Midterm 1 / UE4 practice"],
+    ["11.rendering_2.md", "12.rendering_ue4.md"],
+    ["13.animation.md", "14.animation_ue4.md"],
+    ["15.ui.md", "16.ui_ue4.md"],
+    ["17.ai.md", "18.ai_ue4.md"],
+    ["19.physics.md", "20.physics_ue4.md"],
+    ["21.networking.md", "21.networking_ue4.md"],
+    ["23.tools.md", "24.tools_ue4.md"],
+    ["Midterm 2", ""]
 ];
-var lecturesList = document.getElementById("lectures");
-localStorage.setItem("coursePresentationFrameURL", window.location.href + "revealjs/presentation-iframe.html");
-for (var i = 0; i < lectures.length; i++) {
-    var item = document.createElement("li");
-    item.classList.add("list-item-crossed");
+
+function isTextLectureTitle(text) {
+    return /\d\d\.\w+/.test(text);
+}
+
+function makeContentItemFromLecture(lecture) {
+    if (!isTextLectureTitle(lecture)) {
+        var span = document.createElement("span");
+        span.textContent = lecture;
+        return span;
+    }
+
+    var alwaysCapitalizedWords = ["ui", "ai", "ue4"];
     var anchor = document.createElement("a");
-    anchor.href = "revealjs/presentation-iframe.html?lecture=" + lectures[i];
-    anchor.textContent = lectures[i].split(".")[1].split("_").map(function (word) {
+    anchor.href = "revealjs/presentation-iframe.html?lecture=" + lecture;
+    anchor.textContent = lecture.split(".")[1].split("_").map(function (word) {
+        if (alwaysCapitalizedWords.indexOf(word) != -1) {
+            return word.toUpperCase();
+        }
         return word.substr(0, 1).toUpperCase() + word.substr(1);
     }).join(" ");
-    item.appendChild(anchor);
-    lecturesList.appendChild(item);
+    return anchor;
 }
+
+function main() {
+    var lecturesTable = document.querySelector("#lectures tbody");
+    localStorage.setItem("coursePresentationFrameURL", window.location.href + "revealjs/presentation-iframe.html");
+
+    for (var i = 0; i < lectures.length; i++) {
+        var row = document.createElement("tr");
+        var generalLectureItem = document.createElement("td");
+        var ue4LectureItem = document.createElement("td");
+        row.appendChild(generalLectureItem);
+        row.appendChild(ue4LectureItem);
+        row.classList.add("list-item-crossed");
+
+        generalLectureItem.appendChild(makeContentItemFromLecture(lectures[i][0]));
+        ue4LectureItem.appendChild(makeContentItemFromLecture(lectures[i][1]));
+
+        lecturesTable.appendChild(row);
+    }
+}
+main();
 </script>
 </body>
 </html>

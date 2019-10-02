@@ -84,3 +84,8 @@
     max-width: 35% !important;
     max-height: 35% !important;
 }
+
+.constrain-image-medium {
+    max-width: 55% !important;
+    max-height: 55% !important;
+}

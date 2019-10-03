@@ -57,6 +57,16 @@
     background-image: url(../resources/common/kipi_logo.svg);
 }
 
+#authors-overview {
+    width: 100%;
+}
+#authors-overview li {
+    width: 32%;
+    display: inline-block;
+    font-size: 0.5em;
+    list-style-type: none;
+}
+
 /* General styles */
 .high-contrast-text {
     text-shadow: 2px 0 0 rgb(34, 34, 34),

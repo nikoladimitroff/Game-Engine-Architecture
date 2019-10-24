@@ -4,8 +4,8 @@ A repo containing the learning materials for the course
 See the lectures rendered at
 [nikoladimitroff.github.io/Game-Engine-Architecture](http://nikoladimitroff.github.io/Game-Engine-Architecture)
 
-See the sample project at
-https://github.com/nikoladimitroff/Game-Engine-Architecture
+See the SUSI sample project at
+https://github.com/nikoladimitroff/UE4_SusiPlugin
 
 
 ## Authors

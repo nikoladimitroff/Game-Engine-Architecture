@@ -1,0 +1,253 @@
+<nav>
+    <p>
+        Apply any transform from below<br>
+    </p>
+
+    <!-- Translation -->
+    <button id="translate">Translate with</button>
+    <label for="tx">X</label>
+    <input id="tx" type="number" value="0">
+    <label for="ty">Y</label>
+    <input id="ty" type="number" value="0">
+    <br/>
+    <!-- Rotation -->
+    <button id="rotate">Rotate With Angle</button>
+    <input id="rangle" type="number" value="0"/>
+    <br>
+    <!-- Translation -->
+    <button id="scale">Scale</button>
+    <label for="sx">X</label>
+    <input id="sx" type="number" value="0">
+    <label for="sy">Y</label>
+    <input id="sy" type="number" value="0">
+    <br/>
+</nav>
+<canvas id="canvas" width="100%" height="100%"/>
+
+<style>
+#tiling {
+    border: 1px solid black;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+}
+</style>
+
+<script src="js/vector.js"></script>
+<script src="js/resizer.js"></script>
+<script>
+var canvas = document.getElementById("canvas"),
+    context = canvas.getContext("2d");
+
+Resizer.installHandler(canvas);
+
+function randomColor() {
+    return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
+}
+
+var epsilonEquals = function (x, y, epsilon) {
+    if (!epsilon) {
+        epsilon = 1e-4;
+    }
+    return Math.abs(x, y) < epsilon;
+};
+
+var isInRange = function (value, min, max) {
+    return min <= value && value <= max;
+};
+
+var Collidables = (function () {
+
+var Line = (function () {
+    function Line(a, b) {
+        // y = kx + b
+        // k = dy / dx
+        // b = y_i - kx_i
+        this.slope = (a.y - b.y) / (a.x - b.x);
+        this.offset = a.y - this.slope * a.x;
+        // The line's standart equation is kx - y + b= 0,
+        // Thus, normalize((k, -1)) is normal to the line while
+        // normalize((1, k)) is collinear
+        this.collinear = new Vector2(1, this.slope);
+        this.collinear.normalize();
+		this.point = a;
+        this.color = randomColor();
+    }
+
+    Line.prototype.draw = function (context) {
+        // HACK TO CENTER SYSTEM AROUND SCREEN CENTER
+        var canvasWidth = context.canvas.width;
+        var firstVisiblePoint = new Vector2(-canvasWidth / 2, this.offset - canvasWidth / 2);
+        var lastVisiblePoint = new Vector2(canvasWidth,
+                                           this.slope * canvasWidth + this.offset);
+        context.save();
+        context.strokeStyle = this.color;
+        context.beginPath();
+        context.moveTo(firstVisiblePoint.x, firstVisiblePoint.y);
+        context.lineTo(lastVisiblePoint.x, lastVisiblePoint.y);
+        context.stroke();
+        context.restore();
+    };
+
+    return Line;
+})();
+
+
+var LineSegment = (function () {
+    function LineSegment(a, b) {
+        this.startPoint = a;
+        this.endPoint = b;
+        this.length = a.distTo(b);
+        this.line = new Collidables.Line(a, b);
+        var self = this;
+        Object.defineProperty(this, "color", {
+            get: function () { return self.line.color; },
+            set: function (value) { self.line.color = value; }
+        });
+    }
+
+    LineSegment.prototype.draw = function (context) {
+        context.save();
+        context.strokeStyle = this.color;
+        context.beginPath();
+        context.moveTo(this.startPoint.x, this.startPoint.y);
+        context.lineTo(this.endPoint.x, this.endPoint.y);
+        context.stroke();
+        context.restore();
+    };
+
+    return LineSegment;
+})();
+
+var Rect = (function () {
+    function Rect(topLeft, size) {
+        this.topLeft =  topLeft;
+        if (typeof size === "number") {
+            size = new Vector2(size, size);
+        }
+        this.size = size;
+        this.color = randomColor();
+    };
+
+    Rect.prototype.draw = function (context) {
+        context.save();
+        context.strokeStyle = this.color;
+        context.strokeRect(this.topLeft.x, this.topLeft.y, this.size.x, this.size.y);
+        context.restore();
+    };
+
+    return Rect;
+})();
+
+var Circle = (function () {
+    function Circle(center, radius) {
+        this.center = center;
+        this.radius = radius;
+        this.color = randomColor();
+    }
+
+    Circle.prototype.draw = function (context) {
+        context.save();
+        context.strokeStyle = this.color;
+        context.beginPath();
+        context.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
+        context.closePath();
+        context.stroke();
+        context.restore();
+    };
+
+    return Circle;
+})();
+
+
+return {
+    Line: Line,
+    LineSegment: LineSegment,
+    Rect: Rect,
+    Circle: Circle,
+};
+})();
+
+var figures = [
+    new Collidables.Line(new Vector2(-1, -1), new Vector2(1, 1)),
+    new Collidables.Rect(new Vector2(-200, -300), new Vector2(50, 300)),
+    new Collidables.LineSegment(new Vector2(100, 200), new Vector2(400, 300)),
+    new Collidables.Circle(new Vector2(200, -200), 50),
+    new Collidables.Circle(new Vector2(-400, 200), 5),
+    new Collidables.Circle(new Vector2(0, 0), 5),
+];
+
+var TranslateTransform = function (vec) {
+    this.vec = vec;
+};
+TranslateTransform.prototype.applyMatrix = function (context, t) {
+    context.translate(this.vec.x * t, this.vec.y * t);
+};
+var RotateTransform = function (angle) {
+    this.angle = angle;
+};
+RotateTransform.prototype.applyMatrix = function (context, t) {
+    context.rotate(this.angle * t);
+};
+var ScaleTransform = function (vec) {
+    this.vec = vec;
+};
+ScaleTransform.prototype.applyMatrix = function (context, t) {
+    context.scale(this.vec.x * t, this.vec.y * t);
+};
+
+var transforms = [];
+var tx = document.getElementById("tx");
+var ty = document.getElementById("ty");
+var rangle = document.getElementById("rangle");
+var sx = document.getElementById("sx");
+var sy = document.getElementById("sy");
+document.getElementById("translate").addEventListener("click", function () {
+    var vec = new Vector2(parseFloat(tx.value), parseFloat(ty.value));
+    transforms.push(new TranslateTransform(vec));
+    lastAnimationTime = Date.now();
+    lastUnanimatedIndex = transforms.length - 1;
+});
+document.getElementById("rotate").addEventListener("click", function () {
+    var angle = parseFloat(rangle.value) / 180 * Math.PI;
+    transforms.push(new RotateTransform(angle));
+    lastAnimationTime = Date.now();
+    lastUnanimatedIndex = transforms.length - 1;
+});
+document.getElementById("scale").addEventListener("click", function () {
+    var vec = new Vector2(parseFloat(sx.value), parseFloat(sy.value));
+    transforms.push(new ScaleTransform(vec));
+    lastAnimationTime = Date.now();
+    lastUnanimatedIndex = transforms.length - 1;
+});
+
+var update = function () {
+    setTimeout(update, 1000);
+}
+
+var requestAnimationFrame = window.requestAnimationFrame || function (cb) {
+    setTimeout(cb, 1000 / 60);
+};
+var animationDuration = 2000;
+var lastAnimationTime = Date.now();
+var lastUnanimatedIndex = 0;
+var draw = function () {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.lineWidth = 5;
+    context.save();
+        context.translate(canvas.width / 2, canvas.height / 2);
+        var animationTimepoint = Math.min(1, (Date.now() - lastAnimationTime) / animationDuration);
+        for (var i = 0; i < lastUnanimatedIndex; i++) {
+            transforms[i].applyMatrix(context, 1);
+        }
+        for (var i = lastUnanimatedIndex; i < transforms.length; i++) {
+            transforms[i].applyMatrix(context, animationTimepoint);
+        }
+        figures.forEach(f => f.draw(context));
+    context.restore();
+    requestAnimationFrame(draw);
+};
+
+draw();
+</script>

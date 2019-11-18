@@ -4,6 +4,9 @@ A repo containing the learning materials for the course
 See the lectures rendered at
 [nikoladimitroff.github.io/Game-Engine-Architecture](http://nikoladimitroff.github.io/Game-Engine-Architecture)
 
+See the Action RPG sample project at
+https://github.com/k1p1/UE4TopDownARPG
+
 See the SUSI sample project at
 https://github.com/nikoladimitroff/UE4_SusiPlugin
 

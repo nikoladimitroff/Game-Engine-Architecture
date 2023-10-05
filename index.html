@@ -19,7 +19,7 @@
     <thead>
         <tr>
             <th>General</th>
-            <th>Unreal Engine 4</th>
+            <th>Unreal Engine</th>
         </tr>
     </thead>
     <tbody>
@@ -55,7 +55,7 @@ function makeContentItemFromLecture(lecture) {
         return span;
     }
 
-    var alwaysCapitalizedWords = ["ui", "ai", "ue4"];
+    var alwaysCapitalizedWords = ["ui", "ai", "ue4", "ue", "ue5"];
     var anchor = document.createElement("a");
     anchor.href = "revealjs/presentation-iframe.html?lecture=" + lecture;
     anchor.textContent = lecture.split(".")[1].split("_").map(function (word) {

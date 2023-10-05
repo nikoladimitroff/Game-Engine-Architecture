@@ -95,7 +95,7 @@
                     return;
                 }
                 var convertToPrintableName = function (lecture) {
-                    var alwaysCapitalizedWords = ["ui", "ai", "ue4"];
+                    var alwaysCapitalizedWords = ["ui", "ai", "ue4", "ue", "ue5"];
                     return lecture.split(".")[1].split("_").map(function (word) {
                         if (alwaysCapitalizedWords.indexOf(word) != -1) {
                             return word.toUpperCase();

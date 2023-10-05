@@ -9,22 +9,22 @@ I. Preliminaries
   1. Why Unreal and why not U3D?
   1. Tools of the trade - VS, source control (list of other tools? - profilers, debuggers)
 
-1. Introduction (UE4) Epic Games
-  1. Downloading and installing UE4. Git and VS.
+1. Introduction (UE) Epic Games
+  1. Downloading and installing UE. Git and VS.
   1. Trying out the samples
   1. Directory structure
   1. Important modules
-  1. Creating Hello, UE4.
+  1. Creating Hello, UE.
 
 2. Fundamentals (Theory) D
   1. C++ Review and Best Practices (smart pointers, iterators, error handling, libraries, unity builds)
   1. Pipelines, Caches and Optimization
   1. Tools support
 
-2. Fundamentals (UE4) N
-  1. UE4 Editor.
-  1. UHT, UBT, UE4's modular approach
-  1. UE4 naming convention - U vs A vs S vs T vs F
+2. Fundamentals (UE) N
+  1. UE Editor.
+  1. UHT, UBT, UE's modular approach
+  1. UE naming convention - U vs A vs S vs T vs F
   1. Blueprint scripting (needed to make things easier)
 
 3. 3D Math for Games (Theory) N
@@ -34,7 +34,7 @@ I. Preliminaries
   1. Comparison of Rotational Representations
   1. SIMD
 
-3. 3D Math for Games (UE4) N
+3. 3D Math for Games (UE) N
   1. Common classes for math-related operations - FVector, FMatrix, FQuat.
   1. Solving common problems - collision detection, intersections, getting things to move the way we want them to.
 
@@ -45,8 +45,8 @@ I. Preliminaries
   1. Game Objects.
   1. Breaking the world into levels.
 
-4. Architecturing games (UE4) SN
-  1. Basic UE4 classes - AGameMode & APlayerController. UObject, AActor.
+4. Architecturing games (UE) SN
+  1. Basic UE classes - AGameMode & APlayerController. UObject, AActor.
   1. Ticking. Interaction between classes. Break down of the FPS Demo game.
   1. Exercises to make changes to the FPS game.
   
@@ -59,8 +59,8 @@ II Low-Level Engine Systems
   1. Resources and the File System. (cooking and baking content)
   1. Engine Configuration.
 
-5. Engine Support Systems (UE4) DT
-  1. UE4 Standard Library (FString, TArray, TMap, etc.)
+5. Engine Support Systems (UE) DT
+  1. UE Standard Library (FString, TArray, TMap, etc.)
   1. Garbage Collection. RTTI. Serialization
   1. UAssets. Cooking content.
   1. Engine Configuration. Config files, Config classes.
@@ -74,12 +74,12 @@ II Low-Level Engine Systems
   9. Memory tracking and leaks
   10. Testing
 
-6. Tools for debugging and development (UE4) N
+6. Tools for debugging and development (UE) N
   1. UE4_Log. Declaring different log categories. Assertions.
   1. Breakpoints in CPP and BP.
   1. Console
   1. Debug cameras, pausing, ejecting / possessing.
-  1. UE4 session frontend. Profiling, Automation.
+  1. UE session frontend. Profiling, Automation.
 
 7. The Rendering Engine (Theory) S?
   1. Foundations of Depth-Buffered Triangle Rasterization. Fancy words (Textures, Materials, AA, VSync..)
@@ -89,7 +89,7 @@ II Low-Level Engine Systems
   1. GPU Debugging tools.
   1. HLSL?
 
-7. The Rendering Engine (UE4) AS
+7. The Rendering Engine (UE) AS
   1. Controlling the rendering pipeline, setting the settings.
   1. RHI rendering.
   1. Rolling your own shaders.
@@ -104,7 +104,7 @@ III. Advanced systems
   1. Inverse Kinematics
   1. Action State Machines
 
-8. Animation Systems (UE4) Oberon?
+8. Animation Systems (UE) Oberon?
   1. Getting and creating models. 3D design tools (3DS, Maya, ZBrush)
   1. Importing models. Morph targets and skinned.
   1. Persona overview.
@@ -123,7 +123,7 @@ III. Advanced systems
   1. Integrating a Physics Engine into Your Game - Fixed time steps, Multithreading
      http://gafferongames.com/game-physics/fix-your-timestep/
 
-9. Physics (UE4) N
+9. Physics (UE) N
   1. Collision detection. Collision responses.
   1. Physics materials.
   1. Constraints.
@@ -145,10 +145,10 @@ III. Advanced systems
   1. UI technologies - own implementation vs. HTML5 vs. Flash
   1. Available middleware (Coherent, Scaleform, UMG)
 
-10. UI (UE4) N
+10. UI (UE) N
   1. Slate
   1. UMG
-  1. Integrating Coherent in UE4
+  1. Integrating Coherent in UE
 
 11. Audio (Theory) N
   1. The Physics of Sound
@@ -156,7 +156,7 @@ III. Advanced systems
   1. Audio formats
   1. Available Middleware
 
-11. Audio (UE4) N
+11. Audio (UE) N
   1. Creating and importing audio files. Audacity.
   1. Sound cues.
   1. Attenuation
@@ -169,7 +169,7 @@ III. Advanced systems
   1. Navigation meshes. Path smoothing.
   1. State machine agents.
 
-12. AI (UE4) N
+12. AI (UE) N
   1. Behaviour trees
   1. Environment Query System
   1. Sample maze runner
@@ -179,7 +179,7 @@ III. Advanced systems
   1. Building a custom protocol
   1. Client-side prediction and Server Reconciliation
 
-13. Networking (UE4) D
+13. Networking (UE) D
   1. Replication
   1. Controlling replication and function calls.
   1. Building and running a dedicated server.
@@ -190,7 +190,7 @@ III. Advanced systems
   1. Cinematics
   1. ???
 
-14. Plugins (UE4) N
+14. Plugins (UE) N
   1. Game plugins vs engine plugins
   1. Anatomy of a plugin. Directory structure.
   1. Implementing and using a plugin. Distribution.

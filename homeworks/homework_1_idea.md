@@ -8,7 +8,7 @@ with your project.
 ## Formal requirements
 
 1. Come up with an idea for your plugin.
-    - The plugin must be adding functionality to UE4.
+    - The plugin must be adding functionality to UE.
     - Content is allowed, but must not be the focus of the project.
     - Think of a game you'd like to create / enhance and then
     think of a subsystem of which you can implement as a plugin.
@@ -18,7 +18,7 @@ with your project.
     the form late and there's no time to discuss the idea, we'll
     increase the complexity as we see fit.
     - You are allowed to reimplement something already existing
-    in UE4 but you must do so in a manner that's better in some way
+    in UE but you must do so in a manner that's better in some way
     (performance, usability, features).
     - Projects that deal with low-level systems (such as RHI) will
     get more points.
@@ -29,14 +29,14 @@ with your project.
 1. Fill [the form][google_form]. You can only submit a single response
 but you can edit it any time before the final date. Any submission
 done post the final date will be invalid (and garbage collected).
-2. Create a repository in github of a UE4 game containing the following:
+2. Create a repository in github of a UE game containing the following:
     1. The minimal sufficient folders to have the game.
     You'll use the game as a testing / demo playground.
     1. A plugin in the game's *Plugins* folder. Remember
     that you can use the Plugin Project Creation Wizard
     (Go to *Edit* -> *Plugins* -> *New Plugin*).
     1. You are allowed to fork the entire engine and make
-    changes to the source code if you need to (UE4 has
+    changes to the source code if you need to (UE has
     bugs too) but for this the repository ***MUST*** be
     private. Also, if you could not do that, it'd be great
     as it's much easier to manage.
@@ -75,7 +75,7 @@ In general, you can do anything you like to. Hopefully you've already played a g
 with modding capabilities (such as Dragon Age, The Elder Scrolls series, Fallout,
 The Witcher, WoW, Dark Souls, Heroes of Might and Magic, Civilization, GTA) and
 there was something you thought could do better about it. Now it's your time to implement
-that idea using UE4.
+that idea using UE.
 
 ### Getting inpsired
 
@@ -89,7 +89,7 @@ and scroll through the list until you've found something interesting.
 You can also:
 
 * Scroll the forums of your favourite game for fan ideas
-* Ask in the UE4 forums or the facebook community page for something
+* Ask in the UE forums or the facebook community page for something
 people would enjoy having as a plugin.
 
 

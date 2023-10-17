@@ -35,10 +35,16 @@ We welcome PRs. To run the slides locally:
     http-server -p 8080
     ```
 
-    - If you have python installed:
+    - If you have python2 installed:
 
     ```cmd
     python -m SimpleHTTPServer 8080
+    ```
+	
+	- If you have python3 installed:
+
+    ```cmd
+    python -m http.server 8080
     ```
 
 1. Open [http://localhost:8080/Game-Engine-Architecture](http://localhost:8080/Game-Engine-Architecture)

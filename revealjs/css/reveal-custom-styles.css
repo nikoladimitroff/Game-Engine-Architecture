@@ -39,11 +39,12 @@
     left: 50%;
     height: 5em;
     width: 50%;
+    line-height: 0.5em;
 }
 .companies-section a {
     display: block;
     width: 100%;
-    height: 50%;
+    height: 33%;
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -55,6 +56,10 @@
 
 .kipi-logo {
     background-image: url(../resources/common/kipi_logo.svg);
+}
+
+.omeda-logo {
+    background-image: url(../resources/common/omeda_logo.webp);
 }
 
 #authors-overview {

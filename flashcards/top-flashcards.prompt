@@ -7,6 +7,6 @@ Your task:
 2. return the 15 most important flashcards about rendering 
 3. return the 5 most important flashcards for each of the other topics
 
-Important cards are those which are the most likely to come up on the final test. Cards with mathematics or code are generally more important
+Important cards are those which are most likely to come up on the final test. Cards with mathematics or code are generally more important
 
 Answer only using Markdown using the format you see in the cards

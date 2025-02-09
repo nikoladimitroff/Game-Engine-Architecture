@@ -1,0 +1,18 @@
+
+
+-------------------
+
+This is a small excerpt of a very large course
+Your tasks: 
+1. Filter out only the most important facts, which may be on the final test.
+2. write very short keyword-based markdown flashcard for the most important facts.  Write extremely short questions and answers. Use keywords, not full sentences. Don't use question words (what, how) if it can be avoided.
+
+Respond only using Markdown.
+
+Use the following format:
+```
+## Q: Definition of dot product?
+- A: $\angle pq = \arccos{ \frac {p \cdot q}{|p||q|}}$
+- A: 2nd item in answer list
+- A: 3rd item in answer list
+```
